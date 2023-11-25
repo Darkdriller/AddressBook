@@ -23,6 +23,10 @@ public class AddressBookDetails {
         this.emailId = emailId;
     }
 
+    public AddressBookDetails() {
+
+    }
+
     // Standard Getters and Setters
     public String getFirstName() {
         return firstName;
@@ -90,7 +94,7 @@ public class AddressBookDetails {
 
     @Override
     public String toString() {
-        return "AddressBookDTO{" +
+        return "AddressBookDetails{" +
                 "firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", address='" + address + '\'' +
