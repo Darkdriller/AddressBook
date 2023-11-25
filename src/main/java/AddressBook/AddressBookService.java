@@ -16,4 +16,12 @@ public class AddressBookService {
         } else
             addData(addressBookDeets);
     }
+
+    public void deleteRecord(AddressBookDetails addressBookDTO) {
+        if(DataBase.dtoMap.containsKey(addressBookDTO.getFirstName())){
+            DataBase.dtoMap.remove(addressBookDTO.getFirstName());
+            System.out.println(DataBase.dtoMap.size());
+        } else
+            System.out.println("No such Data Found!!");
+    }
 }

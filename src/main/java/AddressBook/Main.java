@@ -25,6 +25,7 @@ public class Main {
             System.out.println("Pick up the correct choice!");
             System.out.println("1. Add New Contact");
             System.out.println("2. Update Existing Contact");
+            System.out.println("3. Delete Contact");
             int choice = sc.nextInt();
             switch(choice){
                 case 1:
@@ -33,14 +34,17 @@ public class Main {
                 case 2:
                     updateRecords();
                     break;
+                case 3:
+                    addressBookService.deleteRecord(UserInput.userInputFromConsole());
+                    break;
                 default:
                     System.out.println("Please Enter valid choice!!");
                     break;
             }
             Print.printDetails(DataBase.dtoMap);
+            input = sc.nextLine();
+        }
+            Print.printDetails(DataBase.dtoMap);
 
         }
-    }
-
-
     }
