@@ -1,50 +1,62 @@
 package AddressBook;
+
 import java.util.Scanner;
 
 public class Main {
-    public static AddressBookService addressBookService = new AddressBookService();
-    private static void updateRecords() {
-        addressBookService.updateAddressBook(UserInput.userInputFromConsole());
-    }
-    // Main Method
+    private static AddressBookService addressBookService = new AddressBookService();
+    private static Scanner sc = new Scanner(System.in);
+
     public static void main(String[] args) {
         System.out.println("**********Welcome to Address Book System Service*********");
-        Scanner sc = new Scanner(System.in);
-        // Add Contact to the Address Book
-        AddressBookDetails addressBook = new AddressBookDetails("Dhruvjyoti", "Swain", "Vandan Flat", "Vadodara",
-                "Gujarat", "390007", "8191804100", "example@google.com");
-        AddressBookService addressBookService = new AddressBookService();
-        addressBookService.addData(addressBook);
-        Print.printDetails(DataBase.dtoMap);
 
-        String input = "Start";
 
-        while(!input.equalsIgnoreCase("quit")) {
-            System.out.println("enter quit to Quit or press any Button to Continue");
-            input = sc.nextLine();
-            System.out.println("Pick up the correct choice!");
-            System.out.println("1. Add New Contact");
-            System.out.println("2. Update Existing Contact");
-            System.out.println("3. Delete Contact");
-            int choice = sc.nextInt();
-            switch(choice){
+        while (true) {
+            System.out.println("Current AddressBooks Are: ");
+            Print.printAllAddressBooks();
+
+            System.out.println("Choose option: \n1. Add new Address Book \n2. Add Contact \n3. Update Contact \n4. Delete Contact \n5. Exit");
+            int option = sc.nextInt();
+            sc.nextLine(); // consume newline
+
+            String bookName;
+            switch (option) {
                 case 1:
-                    addressBookService.addData(UserInput.userInputFromConsole());
+                    System.out.println("Available Address Books: " + DataBase.getAllAddressBookNames());
+                    System.out.println("Enter Address Book Name:");
+                    bookName = sc.nextLine();
+                    DataBase.getAddressBook(bookName);
                     break;
                 case 2:
-                    updateRecords();
+                    System.out.println("Enter Address Book Name:");
+                    bookName = sc.nextLine();
+                    Print.printDetails(DataBase.getAddressBook(bookName));
+                    AddressBookDetails newContact = UserInput.userInputFromConsole();
+                    addressBookService.addData(bookName, newContact);
                     break;
                 case 3:
-                    addressBookService.deleteRecord(UserInput.userInputFromConsole());
+                    System.out.println("Enter Address Book Name:");
+                    bookName = sc.nextLine();
+                    Print.printDetails(DataBase.getAddressBook(bookName));
+                    System.out.println("Enter First Name of contact to update:");
+                    String firstName = sc.nextLine();
+                    System.out.println("Enter Last Name of contact to update:");
+                    String lastName = sc.nextLine();
+                    AddressBookDetails updatedContact = UserInput.userInputFromConsole();
+                    addressBookService.updateAddressBook(bookName, firstName, lastName, updatedContact);
                     break;
-                default:
-                    System.out.println("Please Enter valid choice!!");
+                case 4:
+                    System.out.println("Enter Address Book Name:");
+                    bookName = sc.nextLine();
+                    Print.printDetails(DataBase.getAddressBook(bookName));
+                    System.out.println("Enter First Name of contact to delete:");
+                    firstName = sc.nextLine();
+                    System.out.println("Enter Last Name of contact to delete:");
+                    lastName = sc.nextLine();
+                    addressBookService.deleteRecord(bookName, firstName, lastName);
                     break;
+                case 5:
+                    return;
             }
-            Print.printDetails(DataBase.dtoMap);
-            input = sc.nextLine();
-        }
-            Print.printDetails(DataBase.dtoMap);
-
         }
     }
+}

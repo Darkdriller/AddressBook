@@ -2,7 +2,7 @@ package AddressBook;
 public class AddressBookDetails {
 
     // Address book contains these fields
-    private  String firstName;
+    private String firstName;
     private String lastName;
     private String address;
     private String city;

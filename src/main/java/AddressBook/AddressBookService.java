@@ -3,25 +3,25 @@ package AddressBook;
 import java.util.Map;
 
 public class AddressBookService {
-    // Making First Name and last name as key and other contact details as value
-    Map<String, AddressBookDetails> dtoMap = DataBase.dtoMap;
-    public void addData(AddressBookDetails dto){
-        DataBase.dtoMap.put(dto.getFirstName() + dto.getLastName() , dto);
+    // Adds a new contact to the specified address book
+    public void addData(String addressBookName, AddressBookDetails dto) {
+        Map<String, AddressBookDetails> addressBook = DataBase.getAddressBook(addressBookName);
+        addressBook.put(dto.getFirstName() + " " + dto.getLastName(), dto);
     }
 
-    public void updateAddressBook(AddressBookDetails addressBookDeets) {
-        Map<String, AddressBookDetails> dtoMap = DataBase.dtoMap;
-        if(dtoMap.containsKey(addressBookDeets.getFirstName())){
-            DataBase.dtoMap.put(addressBookDeets.getFirstName() + addressBookDeets.getLastName(), addressBookDeets);
-        } else
-            addData(addressBookDeets);
+    // Updates a contact in the specified address book
+    public void updateAddressBook(String addressBookName, String firstName, String lastName, AddressBookDetails newDetails) {
+        Map<String, AddressBookDetails> addressBook = DataBase.getAddressBook(addressBookName);
+        String key = firstName + " " + lastName;
+        if (addressBook.containsKey(key)) {
+            addressBook.put(key, newDetails);
+        } else {
+            System.out.println("Contact not found in address book.");
+        }
     }
-
-    public void deleteRecord(AddressBookDetails addressBookDTO) {
-        if(DataBase.dtoMap.containsKey(addressBookDTO.getFirstName())){
-            DataBase.dtoMap.remove(addressBookDTO.getFirstName());
-            System.out.println(DataBase.dtoMap.size());
-        } else
-            System.out.println("No such Data Found!!");
+    // Deletes a contact from the specified address book
+    public void deleteRecord(String addressBookName, String firstName, String lastName) {
+        Map<String, AddressBookDetails> addressBook = DataBase.getAddressBook(addressBookName);
+        addressBook.remove(firstName + " " + lastName);
     }
 }
