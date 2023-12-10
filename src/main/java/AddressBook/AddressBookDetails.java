@@ -1,4 +1,7 @@
 package AddressBook;
+
+import java.util.Objects;
+
 public class AddressBookDetails {
 
     // Address book contains these fields
@@ -105,4 +108,19 @@ public class AddressBookDetails {
                 ", emailId='" + emailId + '\'' +
                 '}';
     }
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        AddressBookDetails that = (AddressBookDetails) o;
+        return (Objects.equals(firstName, that.firstName)) &&
+                (Objects.equals(lastName, that.lastName));
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(firstName, lastName);
+    }
+
+
 }

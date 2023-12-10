@@ -3,10 +3,20 @@ package AddressBook;
 import java.util.Map;
 
 public class AddressBookService {
-    // Adds a new contact to the specified address book
-    public void addData(String addressBookName, AddressBookDetails dto) {
+    // Method to check for duplicates within a single address book
+    private boolean isDuplicateContact(String addressBookName, AddressBookDetails contact) {
         Map<String, AddressBookDetails> addressBook = DataBase.getAddressBook(addressBookName);
-        addressBook.put(dto.getFirstName() + " " + dto.getLastName(), dto);
+        return addressBook.values().stream().anyMatch(contact::equals);
+    }
+
+    // Updated addData method to check for duplicate before adding a new contact
+    public void addData(String addressBookName, AddressBookDetails dto) {
+        if (!isDuplicateContact(addressBookName, dto)) {
+            Map<String, AddressBookDetails> addressBook = DataBase.getAddressBook(addressBookName);
+            addressBook.put(dto.getFirstName() + " " + dto.getLastName(), dto);
+        } else {
+            System.out.println("Addition Not done: Reason Duplicate!");
+        }
     }
 
     // Updates a contact in the specified address book
@@ -24,4 +34,5 @@ public class AddressBookService {
         Map<String, AddressBookDetails> addressBook = DataBase.getAddressBook(addressBookName);
         addressBook.remove(firstName + " " + lastName);
     }
+
 }
