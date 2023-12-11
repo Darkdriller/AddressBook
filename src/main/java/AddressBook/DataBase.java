@@ -15,4 +15,7 @@ public class DataBase {
         return addressBooks.keySet();
     }
 
+    public static Map<String, Map<String, AddressBookDetails>> getAllAddressBooks() {
+        return  addressBooks;
+    }
 }

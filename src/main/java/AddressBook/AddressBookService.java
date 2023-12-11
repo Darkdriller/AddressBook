@@ -1,6 +1,8 @@
 package AddressBook;
 
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class AddressBookService {
     // Method to check for duplicates within a single address book
@@ -34,5 +36,14 @@ public class AddressBookService {
         Map<String, AddressBookDetails> addressBook = DataBase.getAddressBook(addressBookName);
         addressBook.remove(firstName + " " + lastName);
     }
+
+    //Searches by City Or state
+    public List<AddressBookDetails> searchByCityOrState(String city, String state) {
+        return DataBase.getAllAddressBooks().entrySet().stream()
+                .flatMap(entry -> entry.getValue().values().stream())
+                .filter(details -> details.getCity().equals(city) || details.getState().equals(state))
+                .collect(Collectors.toList());
+    }
+
 
 }
