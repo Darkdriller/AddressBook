@@ -15,7 +15,7 @@ public class Main {
             Print.printAllAddressBooks();
 
             System.out.println("Choose option: \n1. Add new Address Book \n2. Add Contact \n3. Update Contact \n4. Delete Contact \n5.Search By City or" +
-                    "State \n6. Give State Dictionary \n7. Give City Dictionary \n8. Exit");
+                    "State \n6. Give State Dictionary \n7. Give City Dictionary \n8. Sort by Name \n9. Exit");
             int option = sc.nextInt();
             sc.nextLine(); // consume newline
 
@@ -74,6 +74,12 @@ public class Main {
                     Print.printCityDictionary();
                     break;
                 case 8:
+                    System.out.print("Enter Address Book Name: ");
+                    String addressBookName = sc.nextLine();
+                    addressBookService.sortPersonsByName(addressBookName)
+                            .forEach(System.out::println);
+                    break;
+                case 9:
                     return;
             }
         }

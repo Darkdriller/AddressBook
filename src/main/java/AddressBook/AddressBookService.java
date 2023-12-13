@@ -3,6 +3,7 @@ package AddressBook;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
+import java.util.Comparator;
 
 public class AddressBookService {
     // Method to check for duplicates within a single address book
@@ -45,6 +46,14 @@ public class AddressBookService {
         return DataBase.getAllAddressBooks().entrySet().stream()
                 .flatMap(entry -> entry.getValue().values().stream())
                 .filter(details -> details.getCity().equals(city) || details.getState().equals(state))
+                .collect(Collectors.toList());
+    }
+
+    // Method to sort persons by name
+    public List<AddressBookDetails> sortPersonsByName(String addressBookName) {
+        return DataBase.getAddressBook(addressBookName).values().stream()
+                .sorted(Comparator.comparing(AddressBookDetails::getFirstName)
+                        .thenComparing(AddressBookDetails::getLastName))
                 .collect(Collectors.toList());
     }
 
