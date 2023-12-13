@@ -14,7 +14,8 @@ public class Main {
             System.out.println("Current AddressBooks Are: ");
             Print.printAllAddressBooks();
 
-            System.out.println("Choose option: \n1. Add new Address Book \n2. Add Contact \n3. Update Contact \n4. Delete Contact \n5. Exit");
+            System.out.println("Choose option: \n1. Add new Address Book \n2. Add Contact \n3. Update Contact \n4. Delete Contact \n5.Search By City or" +
+                    "State \n6. Give State Dictionary \n7. Give City Dictionary \n8. Exit");
             int option = sc.nextInt();
             sc.nextLine(); // consume newline
 
@@ -55,6 +56,24 @@ public class Main {
                     addressBookService.deleteRecord(bookName, firstName, lastName);
                     break;
                 case 5:
+                    System.out.println("Enter Address Book Name:");
+                    bookName = sc.nextLine();
+                    Print.printDetails(DataBase.getAddressBook(bookName));
+                    System.out.println("Enter City:");
+                    String city = sc.nextLine();
+                    System.out.println("Enter State:");
+                    String state = sc.nextLine();
+                    addressBookService.searchByCityOrState(city, state);
+                    break;
+                case 6:
+                    System.out.println("Print State Dictionary");
+                    Print.printStateDictionary();
+                    break;
+                case 7:
+                    System.out.println("Print City Dictionary");
+                    Print.printCityDictionary();
+                    break;
+                case 8:
                     return;
             }
         }

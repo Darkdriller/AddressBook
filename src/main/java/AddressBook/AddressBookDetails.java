@@ -60,7 +60,7 @@ public class AddressBookDetails {
     }
 
     public void setCity(String city) {
-        this.city = city;
+        this.city = city.toLowerCase();
     }
 
     public String getState() {
@@ -68,7 +68,7 @@ public class AddressBookDetails {
     }
 
     public void setState(String state) {
-        this.state = state;
+        this.state = state.toLowerCase();
     }
 
     public String getZipNo() {

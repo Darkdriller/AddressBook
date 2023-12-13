@@ -16,6 +16,7 @@ public class AddressBookService {
         if (!isDuplicateContact(addressBookName, dto)) {
             Map<String, AddressBookDetails> addressBook = DataBase.getAddressBook(addressBookName);
             addressBook.put(dto.getFirstName() + " " + dto.getLastName(), dto);
+            DataBase.updateDictionaries();
         } else {
             System.out.println("Addition Not done: Reason Duplicate!");
         }
@@ -27,6 +28,7 @@ public class AddressBookService {
         String key = firstName + " " + lastName;
         if (addressBook.containsKey(key)) {
             addressBook.put(key, newDetails);
+            DataBase.updateDictionaries();
         } else {
             System.out.println("Contact not found in address book.");
         }
@@ -35,6 +37,7 @@ public class AddressBookService {
     public void deleteRecord(String addressBookName, String firstName, String lastName) {
         Map<String, AddressBookDetails> addressBook = DataBase.getAddressBook(addressBookName);
         addressBook.remove(firstName + " " + lastName);
+        DataBase.updateDictionaries();
     }
 
     //Searches by City Or state
