@@ -56,6 +56,27 @@ public class AddressBookService {
                         .thenComparing(AddressBookDetails::getLastName))
                 .collect(Collectors.toList());
     }
+    // Method to sort persons by city
+    public List<AddressBookDetails> sortPersonsByCity(String addressBookName) {
+        return DataBase.getAddressBook(addressBookName).values().stream()
+                .sorted(Comparator.comparing(AddressBookDetails::getCity))
+                .collect(Collectors.toList());
+    }
+
+    // Method to sort persons by state
+    public List<AddressBookDetails> sortPersonsByState(String addressBookName) {
+        return DataBase.getAddressBook(addressBookName).values().stream()
+                .sorted(Comparator.comparing(AddressBookDetails::getState))
+                .collect(Collectors.toList());
+    }
+
+    // Method to sort persons by zip
+    public List<AddressBookDetails> sortPersonsByZip(String addressBookName) {
+        return DataBase.getAddressBook(addressBookName).values().stream()
+                .sorted(Comparator.comparing(AddressBookDetails::getZipNo))
+                .collect(Collectors.toList());
+    }
+
 
 
 }

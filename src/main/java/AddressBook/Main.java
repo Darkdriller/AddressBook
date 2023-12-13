@@ -80,7 +80,26 @@ public class Main {
                             .forEach(System.out::println);
                     break;
                 case 9:
+                    System.out.print("Enter Address Book Name: ");
+                    addressBookName = sc.nextLine();
+                    addressBookService.sortPersonsByCity(addressBookName)
+                            .forEach(System.out::println);
+                    break;
+                case 10:
+                    System.out.print("Enter Address Book Name: ");
+                    addressBookName = sc.nextLine();
+                    addressBookService.sortPersonsByState(addressBookName)
+                            .forEach(System.out::println);
+                    break;
+                case 11:
+                    System.out.print("Enter Address Book Name: ");
+                    addressBookName = sc.nextLine();
+                    addressBookService.sortPersonsByZip(addressBookName)
+                            .forEach(System.out::println);
+                   break;
+                case 12:
                     return;
+
             }
         }
     }
