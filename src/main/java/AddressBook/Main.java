@@ -15,7 +15,8 @@ public class Main {
             Print.printAllAddressBooks();
 
             System.out.println("Choose option: \n1. Add new Address Book \n2. Add Contact \n3. Update Contact \n4. Delete Contact \n5.Search By City or" +
-                    "State \n6. Give State Dictionary \n7. Give City Dictionary \n8. Sort by Name \n9. Exit");
+                    "State \n6. Give State Dictionary \n7. Give City Dictionary \n8. Sort by Name \n9. Sort by City \n10. Sort by State \n11. Sort by Zip" +
+                    " \n12. Write to CSV \n13. ReadFromCSV  \n14. Exit");
             int option = sc.nextInt();
             sc.nextLine(); // consume newline
 
@@ -98,6 +99,20 @@ public class Main {
                             .forEach(System.out::println);
                    break;
                 case 12:
+                    System.out.print("Enter Address Book Name: ");
+                    addressBookName = sc.nextLine();
+                    System.out.print("Enter CSV File Path to Save: ");
+                    String filePath = sc.nextLine();
+                    addressBookService.saveToCSV(addressBookName, filePath);
+                    break;
+                case 13:
+                    System.out.print("Enter Address Book Name: ");
+                    addressBookName = sc.nextLine();
+                    System.out.print("Enter CSV File Path to Load: ");
+                    filePath = sc.nextLine();
+                    addressBookService.loadFromCSV(addressBookName, filePath);
+                    break;
+                case 14:
                     return;
 
             }

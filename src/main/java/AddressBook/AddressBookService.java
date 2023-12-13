@@ -1,9 +1,16 @@
 package AddressBook;
 
+
+import org.apache.commons.csv.CSVFormat;
+import org.apache.commons.csv.CSVPrinter;
+import org.apache.commons.csv.CSVRecord;
+
+import java.io.*;
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
-import java.util.Comparator;
 
 public class AddressBookService {
     // Method to check for duplicates within a single address book
@@ -76,7 +83,41 @@ public class AddressBookService {
                 .sorted(Comparator.comparing(AddressBookDetails::getZipNo))
                 .collect(Collectors.toList());
     }
-
+    public void loadFromCSV(String addressBookName, String filePath) {
+        try (Reader reader = new FileReader(filePath)) {
+            Iterable<CSVRecord> records = CSVFormat.DEFAULT
+                    .withFirstRecordAsHeader().parse(reader);
+            for (CSVRecord record : records) {
+                AddressBookDetails contact = new AddressBookDetails(
+                        record.get("FirstName"),
+                        record.get("LastName"),
+                        record.get("Address"),
+                        record.get("City"),
+                        record.get("State"),
+                        record.get("Zip"),
+                        record.get("Phone"),
+                        record.get("Email"));
+                DataBase.getAddressBook(addressBookName).put(contact.getFirstName() + " " + contact.getLastName(), contact);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    public void saveToCSV(String addressBookName, String filePath) {
+        List<AddressBookDetails> contacts = new ArrayList<>(DataBase.getAddressBook(addressBookName).values());
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath));
+             CSVPrinter csvPrinter = new CSVPrinter(writer, CSVFormat.DEFAULT
+                     .withHeader("FirstName", "LastName", "Address", "City", "State", "Zip", "Phone", "Email"))) {
+            for (AddressBookDetails contact : contacts) {
+                csvPrinter.printRecord(contact.getFirstName(), contact.getLastName(),
+                        contact.getAddress(), contact.getCity(),
+                        contact.getState(), contact.getZipNo(),
+                        contact.getMobileNo(), contact.getEmailId());
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
 
 }
